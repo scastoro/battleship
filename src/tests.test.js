@@ -29,7 +29,7 @@ describe('Ship factory function', () => {
     ]);
   });
   test('ship is sunk', () => {
-    expect(testShip.isSunk()).toBe('The ship is sunk!');
+    expect(testShip.isSunk()).toBe(true);
   });
 });
 
@@ -38,7 +38,6 @@ describe('test gameboard factory function', () => {
   const testShip2 = Ship('gameBoardShip', 2);
 
   const testBoard = Gameboard();
-  testBoard.storeShip(testShip);
 
   testBoard.placeShip(
     [
@@ -48,6 +47,11 @@ describe('test gameboard factory function', () => {
     ],
     testShip
   );
+
+  testBoard.storeShip(testShip);
+
+  testBoard.receiveAttack(['A', '2']);
+  testBoard.receiveAttack(['A', '3']);
 
   test('place ship', () => {
     expect(testShip.getCoords()).toStrictEqual([
@@ -70,5 +74,21 @@ describe('test gameboard factory function', () => {
   });
   test('received attack: hit', () => {
     expect(testBoard.receiveAttack(['A', '1'])).toBe('Ship hit!');
+  });
+  test('hit coords', () => {
+    expect(testShip.hitCoords).toStrictEqual([
+      ['A', '2'],
+      ['A', '3'],
+      ['A', '1'],
+    ]);
+  });
+  test('received attack: missed', () => {
+    expect(testBoard.receiveAttack(['B', '1'])).toBe('Attack missed!');
+  });
+  test('all ships sunk', () => {
+    expect(testBoard.allShipsSunk()).toBe(true);
+  });
+  test('get missed shots', () => {
+    expect(testBoard.getMissed()).toStrictEqual([['B', '1']]);
   });
 });

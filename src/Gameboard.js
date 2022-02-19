@@ -1,6 +1,8 @@
 const Gameboard = () => {
   // Array to store ships and their coords
   const ships = [];
+  // Store missed shots
+  const missed = [];
   // Method to store ships once they have been created
   const storeShip = (ship) => {
     ships.push(ship);
@@ -29,12 +31,19 @@ const Gameboard = () => {
         return 'Ship hit!';
       }
     }
+    missed.push(coords);
     return 'Attack missed!';
   };
-  // keep track of missed shots
+  // return missed shots
+  const getMissed = () => {
+    return missed;
+  };
   // report if all ships have been sunk
+  const allShipsSunk = () => {
+    return ships.every((element) => element.isSunk());
+  };
 
-  return { placeShip, storeShip, receiveAttack };
+  return { placeShip, storeShip, receiveAttack, allShipsSunk, getMissed };
 };
 
 export default Gameboard;
