@@ -1,5 +1,14 @@
-const Ship = (name, length, shipCoords=[]) => {
+const Ship = (name, length) => {
+  const shipCoords = [];
   const hitCoords = [];
+  const setCoords = (coords) => {
+    coords.forEach(element => {
+      shipCoords.push(element)
+    });
+  }
+  const getCoords = () => {
+    return shipCoords;
+  }
   const hit = (coords) => {
     hitCoords.push(shipCoords.find(element => element[0] === coords[0] && element[1] === coords[1]))
   }
@@ -9,7 +18,7 @@ const Ship = (name, length, shipCoords=[]) => {
     }
   }
   // TODO: Hide private variables once debugging is done
-  return {name, length, shipCoords, hitCoords, hit, isSunk}
+  return {name, length, shipCoords, hitCoords, hit, isSunk, setCoords, getCoords}
 }
 
 export default Ship;
