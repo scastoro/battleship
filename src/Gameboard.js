@@ -31,11 +31,11 @@ const Gameboard = () => {
 
       if (attack) {
         ship.hit(coords);
-        return 'Ship hit!';
+        return true;
       }
     }
     missed.push(coords);
-    return 'Attack missed!';
+    return false;
   };
   // return missed shots
   const getMissed = () => {

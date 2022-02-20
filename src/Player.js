@@ -1,14 +1,17 @@
 export default class Player {
   constructor() {
+    // Array to enable computer to pick legal coords
     this.legalCoords = [
       ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
       ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
     ];
     this.previousAttack = [];
   }
+  // Send attack and receive boolean to determine the status of the attack
   attack = (coords, gameboard) => {
-    gameboard.receiveAttack(coords);
+    return gameboard.receiveAttack(coords);
   };
+  // Generate random coords and ensure that same one is not picked twice in a row
   randomCoords = () => {
     const randomAttack = [
       this.legalCoords[0][
@@ -25,9 +28,10 @@ export default class Player {
       return randomAttack;
     }
   };
+  // Use random coords to submit attack
   computerAttack = (gameboard) => {
     const coords = this.randomCoords();
     console.log(coords);
-    this.attack(coords, gameboard);
+    return this.attack(coords, gameboard);
   };
 }

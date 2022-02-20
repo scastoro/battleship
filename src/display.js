@@ -1,7 +1,7 @@
 const display = () => {
   const content = document.querySelector('.content');
   const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
-
+  // Generate gameboard HTML based on column array
   const renderGameboard = () => {
     const gameboardContainer = document.createElement('section');
     gameboardContainer.classList.toggle('gameboard-container');
@@ -32,8 +32,14 @@ const display = () => {
 
     content.appendChild(gameboardContainer);
   };
-
-  return { renderGameboard };
+  // Change background color of cell depending on hit or miss
+  const hit = (eventObj) => {
+    eventObj.target.classList.toggle('hit');
+  };
+  const miss = (eventObj) => {
+    eventObj.target.classList.toggle('miss');
+  };
+  return { renderGameboard, hit, miss };
 };
 
 export default display;

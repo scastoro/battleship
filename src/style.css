@@ -1,5 +1,6 @@
 .content {
-  display: inline-block;
+  display: flex;
+  gap: 3rem;
 }
 .cell {
   height: 2rem;
@@ -34,4 +35,12 @@
 }
 .row {
   display: flex;
+}
+
+.hit {
+  background-color: green;
+}
+
+.miss {
+  background-color: red;
 }
