@@ -5,13 +5,16 @@ const Gameboard = () => {
   const missed = [];
   // Method to store ships once they have been created
   const storeShip = (ship) => {
+    if (!ship.getCoords()) {
+      throw 'Ship does not have coords!';
+    }
     ships.push(ship);
   };
   // Place ships at specific coords by calling the ship factory function
   const placeShip = (coords, ship) => {
     // Check if number of coords is the correct length
     if (coords.length !== ship.length) {
-      return 'Number of coords should be equal to ship length.';
+      throw 'Number of coords should be equal to ship length.';
     }
     ship.setCoords(coords);
   };
