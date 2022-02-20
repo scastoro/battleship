@@ -1,5 +1,6 @@
 import Ship from './Ship';
 import Gameboard from './Gameboard';
+import { Player } from './Player';
 
 describe('Ship factory function', () => {
   const testShip = Ship('myShip', 4);
@@ -90,5 +91,34 @@ describe('test gameboard factory function', () => {
   });
   test('get missed shots', () => {
     expect(testBoard.getMissed()).toStrictEqual([['B', '1']]);
+  });
+});
+
+// jest.mock('./Player', () => {
+//   const originalModule = jest.requireActual('./Player');
+
+//   return {
+//     __esModule: true,
+//     ...originalModule,
+//     randomCoords: () => ['B', '2'],
+//   };
+// });
+beforeAll(() => {
+  jest.spyOn(Player, 'randomCoords').mockImplementation(() => 'test');
+});
+const testPlayer = Player();
+describe.only('test Player factory', () => {
+  const testBoard = Gameboard();
+
+  // const spy = jest.spyOn(Player, 'randomCoords');
+  testPlayer.attack(['B', '1'], testBoard);
+  testPlayer.computerAttack(testBoard);
+
+  test('Player attack', () => {
+    // expect(spy).toHaveBeenCalledTimes(1);
+    expect(testBoard.getMissed()).toStrictEqual([
+      ['B', '1'],
+      ['B', '2'],
+    ]);
   });
 });
