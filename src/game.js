@@ -1,6 +1,8 @@
 import Gameboard from './Gameboard';
 import Player from './Player';
 import Ship from './Ship';
+import display from './display';
+import './style.css';
 
 const gameLoop = () => {
   const playerBoard = Gameboard();
@@ -77,4 +79,6 @@ const gameLoop = () => {
   }
 };
 
-gameLoop();
+const myDisplay = display();
+myDisplay.renderGameboard();
+// gameLoop();
