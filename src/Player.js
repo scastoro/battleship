@@ -32,6 +32,6 @@ export default class Player {
   computerAttack = (gameboard) => {
     const coords = this.randomCoords();
     console.log(coords);
-    return this.attack(coords, gameboard);
+    return { hit: this.attack(coords, gameboard), coords };
   };
 }

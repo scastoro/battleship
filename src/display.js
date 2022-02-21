@@ -1,10 +1,11 @@
-const display = () => {
+const display = (displayName) => {
   const content = document.querySelector('.content');
   const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   // Generate gameboard HTML based on column array
   const renderGameboard = () => {
     const gameboardContainer = document.createElement('section');
     gameboardContainer.classList.toggle('gameboard-container');
+    gameboardContainer.classList.toggle(`${displayName}`);
     const headerRow = document.createElement('section');
     headerRow.classList.toggle('header-row');
     columns.forEach((col) => {
@@ -39,7 +40,21 @@ const display = () => {
   const miss = (eventObj) => {
     eventObj.target.classList.toggle('miss');
   };
-  return { renderGameboard, hit, miss };
+  const computerHit = (coords) => {
+    const rows = document.querySelectorAll('.computer .row');
+    const letterIndex = columns.indexOf(coords[0]) + 1;
+
+    const cell = rows[coords[1] - 1].children[letterIndex];
+    cell.classList.add('hit');
+  };
+  const computerMiss = (coords) => {
+    const rows = document.querySelectorAll('.computer .row');
+    const letterIndex = columns.indexOf(coords[0]) + 1;
+
+    const cell = rows[+coords[1] - 1].children[letterIndex];
+    cell.classList.add('miss');
+  };
+  return { renderGameboard, hit, miss, computerHit, computerMiss };
 };
 
 export default display;

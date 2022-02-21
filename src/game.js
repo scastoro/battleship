@@ -6,7 +6,6 @@ import './style.css';
 
 const gameLoop = () => {
   // Set variable to increment after each round
-  let rounds = 1;
   // Initialize players, boards and ships
   const playerBoard = Gameboard();
   const compBoard = Gameboard();
@@ -59,7 +58,8 @@ const gameLoop = () => {
   compBoard.storeShip(firstComputerShip);
   compBoard.storeShip(secondComputerShip);
   // Create display
-  const myDisplay = display();
+  const myDisplay = display('player');
+  const compDisplay = display('computer');
   // Run game on every click event
   const game = (eventObj) => {
     const coords = eventObj.target.getAttribute('data-coords');
@@ -69,41 +69,31 @@ const gameLoop = () => {
     } else {
       myDisplay.miss(eventObj);
     }
-    if (playerBoard.allShipsSunk()) {
-      console.log('All player ships sunk! You lose!');
-      // TODO: Unbind event listeners on game over
-      // TODO: Some way to restart game?
-    } else if (compBoard.allShipsSunk()) {
+    if (compBoard.allShipsSunk()) {
       console.log('All computer ships sunk! You win!');
     }
     // TODO: have the computer make an attack after every player attack
+    // and check if all players ships have been sunk
+    setTimeout(() => {
+      const computerAttack = compPlayer.computerAttack(playerBoard);
+      console.log(computerAttack.hit);
+      if (computerAttack.hit) {
+        compDisplay.computerHit(computerAttack.coords);
+      } else {
+        compDisplay.computerMiss(computerAttack.coords);
+      }
+      if (playerBoard.allShipsSunk()) {
+        console.log('All player ships sunk! You lose!');
+        // TODO: Unbind event listeners on game over
+        // TODO: Some way to restart game?
+      }
+    }, 250);
   };
   // Render player display and attach event listeners
   myDisplay.renderGameboard();
   const cells = document.querySelectorAll('.cell');
   cells.forEach((cell) => cell.addEventListener('click', game));
-  myDisplay.renderGameboard();
-
-  // while (true && rounds < 20) {
-  //   if (rounds % 2 !== 0) {
-  //     let playerInput = prompt('Please enter your coordinates:')
-  //       .replace(/\s+/g, '')
-  //       .toUpperCase()
-  //       .split(',');
-  //     console.log(playerInput);
-  //     newPlayer.attack(playerInput, compBoard);
-  //   } else {
-  //     compPlayer.computerAttack(playerBoard);
-  //   }
-  //   if (playerBoard.allShipsSunk()) {
-  //     console.log('All player ships sunk! You lose!');
-  //     break;
-  //   } else if (compBoard.allShipsSunk()) {
-  //     console.log('All computer ships sunk! You win!');
-  //     break;
-  //   }
-  //   rounds++;
-  // }
+  compDisplay.renderGameboard();
 };
 
 gameLoop();
